@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../index.css";
 import logo from "../assets/header/loggg.png";
 
 function Button() {
   return (
-    <div className="flex flex-col w-1/3 sm:w-auto sm:flex-row p-4">
+    <div className="flex justify-center w-full mb-4 m-3">
       <a
         href=""
-        className="flex flex-row items-center justify-center w-full px-4 py-4 mb-4  font-bold bg-greenlogo leading-6 capitalize duration-100 text-2xl text-white transform rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:mb-0 sm:w-auto     hover:shadow-lg hover:-translate-y-1"
+        className="flex items-center justify-center px-4 py-4 text-outline-gray font-bold bg-greenlogo leading-6 capitalize duration-100 text-lg md:text-2xl text-white transform rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none hover:shadow-lg hover:-translate-y-1"
       >
         Contact us
         <span className="ml-4">
@@ -29,12 +29,30 @@ function Button() {
 }
 
 export default function VideoBlock() {
+  const [videoStyle, setVideoStyle] = useState({ objectPosition: "center" });
+
+  const checkScreenSize = () => {
+    if (window.innerWidth >= 1024) {
+      setVideoStyle({ objectPosition: "0px -600px" });
+    } else {
+      setVideoStyle({ objectPosition: "center" });
+    }
+  };
+
+  useEffect(() => {
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, []);
+
   return (
-    <div className="relative bg-black w-full min-h-screen overflow-hidden flex flex-row items-center justify-center z-10">
+    <div className="relative bg-black w-full min-h-screen overflow-hidden flex flex-col items-center justify-center z-10">
       <div className="absolute inset-0 overflow-hidden">
         <video
           className="w-full h-auto min-h-full object-cover opacity-65"
-          style={{ objectPosition: "0px -600px" }}
+          style={videoStyle}
           src="https://res.cloudinary.com/dnyy3dh2w/video/upload/v1723411137/IMG_8216_nmh0ob.mp4"
           type="video/mp4"
           loop
@@ -46,12 +64,13 @@ export default function VideoBlock() {
         <img
           src={logo}
           alt=""
-          className="w-72 h-72 object-contain bg-white rounded-full bg-opacity-40"
+          className="w-56 h-56 md:w-72 md:h-72 object-contain bg-white rounded-full bg-opacity-40"
         />
-        <Button />
-        <p className="text-white text-center text-4xl font-oswald ">
+
+        <p className="text-white text-center text-2xl md:text-4xl font-oswald">
           Improve your business and <span>make strong connections</span>
         </p>
+        <Button />
       </div>
     </div>
   );

@@ -14,4 +14,11 @@
   object-position: top;
   transform: translateY(20%);
 }
+/* Add this to your global CSS file (e.g., index.css) */
+
+@media (min-width: 1024px) {
+  .lg\:object-position-custom {
+    object-position: 0px -600px;
+  }
+}
 
